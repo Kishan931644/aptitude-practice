@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+import './App.css';
 import OptionCon from './assets/Component/OptionCon';
 import './assets/css/optionCon.css';
 
@@ -36,6 +36,11 @@ function App() {
 
   return (
     <>
+      <section className="wrapper">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+      </section>
       {
         (question == null) ? "Loading" :
           <div className='question-container' >
