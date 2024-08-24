@@ -10,6 +10,9 @@ Quantitative Reasoning
 Logical Reasoning
 Data Interpretation
 
+# Demo
+[Live Demo](https://codesandbox.io/p/github/Kishan931644/aptitude-practice)
+
 #Getting Started:
 
 1. Prerequisites: <br/>
