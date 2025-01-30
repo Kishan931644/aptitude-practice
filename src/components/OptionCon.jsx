@@ -1,4 +1,3 @@
-import '../css/optionCon.css'; // Ensure this path is correct
 
 export default function OptionCon({ option, checked, change }) {
     return (
