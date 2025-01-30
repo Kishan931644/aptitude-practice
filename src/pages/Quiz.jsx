@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import OptionCon from "../components/OptionCon";
+import OptionCon from "@/components/OptionCon";
+import { Button } from "@/components/ui/button";
+import { RadioGroup } from "@/components/ui/radio-group";
 
 export default function Quiz() {
     const [question, setquestion] = useState(null);
@@ -13,7 +15,6 @@ export default function Quiz() {
         });
 
         let data = await response.json();
-        console.log(data);
 
         setquestion(data);
         setEplanation(null);
@@ -22,7 +23,7 @@ export default function Quiz() {
 
     const checkAnswer = () => {
         let index = question["options"].indexOf(question.answer);
-        console.log(index);
+
         document.getElementsByClassName("option")[index].style.background = "green";
         setEplanation(question.explanation);
         setSubmitted(true);
@@ -43,15 +44,15 @@ export default function Quiz() {
                 (question == null) ? "Loading" :
                     <div className='question-container' >
                         <div className="question">{question.question}</div>
-                        <div className="options">
+                        <RadioGroup value={selected} onValueChange={(e) => {
+                            setSelected(e)
+                        }} className="space-y-2">
                             {
                                 question.options.map((opt) => {
-                                    return <OptionCon option={opt} key={opt} checked={selected} change={(e) => {
-                                        setSelected(e.target.value)
-                                    }} />
+                                    return <OptionCon key={opt} option={opt} checked={selected} />
                                 })
                             }
-                        </div>
+                        </RadioGroup>
                         {
                             explanation ?
                                 <div className="explanation">
@@ -80,10 +81,10 @@ export default function Quiz() {
                         }
                         {
                             submitted ?
-                                <button onClick={fetchQuestion}>Next Question</button> :
-                                <button onClick={checkAnswer}>Submit</button>
+                                <Button onClick={fetchQuestion}>Next Question</Button> :
+                                <Button onClick={checkAnswer}>Submit</Button>
                         }
-                    </div>
+                    </div >
             }
         </>
     )

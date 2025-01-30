@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Mic, MicOff, ChevronLeft, ChevronRight } from "lucide-react"
@@ -21,23 +21,46 @@ export default function MockInterview() {
     const [isRecording, setIsRecording] = useState(false)
     const [userAnswer, setUserAnswer] = useState("")
     const [showAIAnswer, setShowAIAnswer] = useState(false)
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+        setIsRecording(true);
+    };
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setUserAnswer(transcript);
+    };
+
+    recognition.onend = () => {
+        setIsRecording(false);
+    };
 
     useEffect(() => {
-        // Reset states when question changes
         setUserAnswer("")
         setShowAIAnswer(false)
     }, [])
 
     const startRecording = async () => {
         try {
-            setIsRecording(true)
+            recognition.start();
         } catch (error) {
             console.error("Error accessing microphone:", error)
         }
     }
 
     const stopRecording = () => {
+        recognition.stop();
         setIsRecording(false)
+    }
+
+    const speak = () => {
+        const utterance = new SpeechSynthesisUtterance("Welcome to this tutorial!");
+        const voices = speechSynthesis.getVoices();
+        utterance.voice = voices[0];
+
+        speechSynthesis.speak(utterance);
     }
 
     const handlePrevious = () => {

@@ -1,18 +1,16 @@
+import { RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "./ui/label";
 
-export default function OptionCon({ option, checked, change }) {
+export default function OptionCon({ option, checked }) {
     return (
-        <div className="option" key={option} >
-            <label className="checkbox-container">
-                <input
-                    className="custom-checkbox"
-                    type="checkbox"
-                    checked={checked === option ? true : false}
-                    onChange={change}
-                    value={option}
-                />
-                <span className="checkmark"></span>
-            </label>
-            {option}
+        <div className="option flex gap-2 my-1" key={option}>
+            <RadioGroupItem
+                className="checkbox-container"
+                value={option}
+                id={option}
+                checked={checked === option}
+            />
+            <Label htmlFor={option}>{option}</Label>
         </div >
     );
 }
